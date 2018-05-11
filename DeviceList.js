@@ -10,19 +10,20 @@ const styles = StyleSheet.create({
     },
   });
 
-const DeviceList = ({devices, onConnectionChange}) => {
-    console.log(devices);
+const DeviceList = ({devices, connectedDeviceId, onConnectionChange, onRefresh}) => {
   return (<FlatList
     data={devices}
     keyExtractor={device => device.id}
     renderItem={({item, index}) => (
-      <DeviceItem device={item} onConnectionChange={onConnectionChange} />
+      <DeviceItem device={item} onConnectionChange={onConnectionChange} isEnabled={!connectedDeviceId || connectedDeviceId === item.id}/>
     )}
     showsVerticalScrollIndicator={false}
     contentContainerStyle={styles.flatlist}
     ItemSeparatorComponent={() => (
       <View style={[styles.separator]} />
     )}
+    onRefresh={onRefresh}
+    refreshing={false}
 />)
 };
 
